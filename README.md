@@ -17,3 +17,14 @@ $ kubectl apply -f <manifest> --prune -l <label>
 ```
 $ kubectl delete -f <manifest>
 ```
+
+## 自己署名証明書作成
+IngressでHTTPSを利用する場合に証明書が必要のためSecretリソースとして作成
+```
+$ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout tls.key -out tls.crt -subj "/CN=sample.example.com"
+```
+
+## Secret作成
+```
+$ kubectl create secret tls --save-config tls-sample --key tls.key --cert tls.crt
+```
